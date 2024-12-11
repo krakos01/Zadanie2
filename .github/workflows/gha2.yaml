@@ -1,4 +1,4 @@
-name: GHAction Zadanie2_test
+name: z2test_gha
 
 on:
   workflow_dispatch:
@@ -21,7 +21,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ vars.DOCKERHUB_USERNAME }}/Zadanie2_test
+          images: ${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test
           flavor: latest=false
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
@@ -51,9 +51,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           cache-from: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/Zadanie2_test:cache 
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test:cache 
           cache-to: |
-            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/Zadanie2_test:cache  
+            type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test:cache  
           tags: ${{ steps.meta.outputs.tags }}
 
       -
