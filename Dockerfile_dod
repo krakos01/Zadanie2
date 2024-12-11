@@ -1,0 +1,57 @@
+# syntax=docker/dockerfile:1.3
+
+# -- ETAP 1 --
+FROM golang:1.23-alpine3.19 AS builder
+
+# Ustawienie katalogu roboczego
+WORKDIR /app
+
+# Uaktualnienie systemu i instalacja gita i openssh
+RUN apk update && \
+    apk upgrade && \
+    apk add --no-cache openssh-client \
+    git && \
+    rm -rf /etc/apk/cache
+
+
+# Skanowanie kluczy publicznych github i 
+# Utworzenie katalogu docelowego dla sklonowanej aplikacji z gita,
+RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts && \
+	mkdir -p /repo_zad1
+
+# Kopiowanie aplikacji z githuba
+RUN --mount=type=ssh,id=zad1git git clone git@github.com:krakos01/Zadanie1_SW.git repo_zad1 && \
+	mv repo_zad1/projekt.go /app
+
+
+# Budowanie aplikacji w Go
+RUN go build projekt.go
+
+
+# -- ETAP 2 --
+FROM scratch
+
+# Deklaracja metadanych - imię i nazwisko autora
+LABEL org.opencontainers.image.authors="Dawid Krajewski"
+
+# Wykorzystuje obraz bazowy alpine
+ADD alpine-minirootfs-3.20.3-x86_64.tar /
+
+# Instalacja CURL'a
+RUN apk add --update --no-cache curl
+
+# Ustawienie katalogu roboczego
+WORKDIR /app
+
+# Kopiowanie aplikacji z etapu pierwszego
+COPY --from=builder /app /app
+
+# Deklaracja portu aplikacji w kontenerze
+EXPOSE 8080
+
+# Monitorowanie dostępności serwera
+HEALTHCHECK --interval=10s --timeout=1s \
+ CMD curl -f http://localhost:8080 || exit 1
+
+# Deklaracja sposobu uruchomienia serwera
+CMD ["./projekt"]
