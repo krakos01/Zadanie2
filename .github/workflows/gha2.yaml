@@ -42,6 +42,13 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      -
+         name: Docker Scout
+         uses: docker/scout-action@v1.15.1
+         with:
+           command: cves
+           fail-on-severity: high
+
       - 
         name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -56,10 +63,5 @@ jobs:
             type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test:cache  
           tags: ${{ steps.meta.outputs.tags }}
 
-      -
-        name: Docker Scout
-        uses: docker/scout-action@v1.15.1
-        with:
-            command: cves
-            only_severities: critical, high
+    
                  
