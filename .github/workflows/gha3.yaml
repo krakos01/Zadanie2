@@ -63,12 +63,12 @@ jobs:
 
       -
         name: Docker Scout
-        uses: docker/scout-action@v1.15.1
+        uses: docker/scout-action@v1.16.0
         with:
           github-token: ${{ github.token }}
           image: ${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test
           command: cves
-          exit-on: high
+          exit-on: "high"
           
 
 
