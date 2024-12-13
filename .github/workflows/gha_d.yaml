@@ -48,7 +48,7 @@ jobs:
         name: Docker Scout
         uses: docker/scout-action@v1.16.0
         with:
-          image: ${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test
+        #  image: ${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test
           command: cves
           exit-on: "critical"
           
