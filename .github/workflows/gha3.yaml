@@ -61,6 +61,7 @@ jobs:
           cache:to: |
             type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
           tags: ${{ steps.meta.outputs.tags }}
+          output: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:${{ steps.meta.outputs.tags }}
           
 
       -
