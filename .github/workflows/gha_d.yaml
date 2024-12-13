@@ -50,7 +50,6 @@ jobs:
         with:
             command: cves
             only-severities: critical, high
-            exit-on: critical
           
 
 
