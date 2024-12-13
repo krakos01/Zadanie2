@@ -58,10 +58,9 @@ jobs:
           push: false
           cache-from: |
             type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
-          cache:to: |
+          cache-to: |
             type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
           tags: ${{ steps.meta.outputs.tags }}
-          output: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:${{ steps.meta.outputs.tags }}
           
 
       -
