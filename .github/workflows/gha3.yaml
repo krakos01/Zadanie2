@@ -49,7 +49,7 @@ jobs:
 
 
       -
-        name: Trivy SBOM and provenance
+        name: Trivy SBOM
         uses: aquasecurity/trivy-action@0.29.0
         with:
           scan-type: 'fs'
@@ -60,7 +60,15 @@ jobs:
           severity: "HIGH,CRITICAL"
           scanners: "vuln"
           exit-code: '2'
+
+
      
+      -
+        name: Upload as a Github artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-sbom-report
+          path: '${{ github.workspace }}/dependency-results.sbom.json'
 
         
       - 
