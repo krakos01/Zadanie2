@@ -18,7 +18,7 @@ jobs:
     steps:
       -
         name: Show log
-        run: echo "token: $GITHUB_TOKEN"
+        run: echo "$GITHUB_TOKEN"
     
       - 
         name: Check out the source_repo
@@ -50,7 +50,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ github.token }}
         
       - 
         name: Build and push image
