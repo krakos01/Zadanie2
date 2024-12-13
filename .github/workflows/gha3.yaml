@@ -16,9 +16,11 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
-      -
-        name: Show log
-        run: echo "$GITHUB_TOKEN"
+      - 
+        name: Debug authentication
+        run: |
+          echo "Logging in to ghcr.io with ${{ github.actor }}"
+          echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
     
       - 
         name: Check out the source_repo
