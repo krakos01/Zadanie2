@@ -60,7 +60,8 @@ jobs:
             type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
           cache-to: |
             type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
-          tags: ${{ steps.meta.outputs.tags }}
+          #tags: ${{ steps.meta.outputs.tags }}
+          tags: ghcr.io/krakos01/zadanie2_test:v0
           
 
       -
@@ -70,7 +71,8 @@ jobs:
           scan-type: 'image'
           format: 'table'
           output: 'dependency-results.sbom.json'
-          image-ref: ${{ steps.meta.outputs.tags }}
+          #image-ref: ${{ steps.meta.outputs.tags }}
+          image-reg: 'ghcr.io/krakos01/zadanie2_test:v0'
           github-pat: ${{ github.token }}
           severity: "HIGH,CRITICAL"
           scanners: "vuln"
