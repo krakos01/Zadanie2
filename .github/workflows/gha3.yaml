@@ -58,8 +58,8 @@ jobs:
       -
         name: Docker Scout
         uses: docker/scout-action@v1.16.0
-        image: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ zadanie2_test }}
         with:
+          image: ${{ env.REGISTRY }}/${{ github.repository_owner }}/zadanie2_test
           github-token: ${{ github.token }}
           command: cves
           only-severities: high, critical
