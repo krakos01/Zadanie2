@@ -58,6 +58,7 @@ jobs:
       -
         name: Docker Scout
         uses: docker/scout-action@v1.16.0
+        image: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ zadanie2_test }}
         with:
           github-token: ${{ github.token }}
           command: cves
