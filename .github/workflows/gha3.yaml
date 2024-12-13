@@ -59,13 +59,12 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           cache-from: |
-            type=registry,ref=${{ github.actor }}/zadanie2_test:cache 
+            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache 
           cache-to: |
-            type=registry,ref=${{ github.actor }}/zadanie2_test:cache  
+            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache  
           tags: ${{ steps.meta.outputs.tags }}
 
     
