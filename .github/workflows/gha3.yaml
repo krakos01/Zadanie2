@@ -59,7 +59,7 @@ jobs:
         name: Docker Scout
         uses: docker/scout-action@v1.16.0
         with:
-#          github-token: ${{ github.token }}
+          github-token: ${{ github.token }}
           command: cves
           only-severities: high, critical
           exit-code: true
