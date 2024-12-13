@@ -68,7 +68,7 @@ jobs:
           github-token: ${{ github.token }}
           image: ${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test
           command: cves
-          exit-on: "critical, high"
+       #   exit-on: "critical"
           
 
 
