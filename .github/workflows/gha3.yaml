@@ -16,6 +16,10 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
+      -
+        name: Show log
+        run: echo "token: $GITHUB_TOKEN"
+    
       - 
         name: Check out the source_repo
         uses: actions/checkout@v4
@@ -47,8 +51,7 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "token: $GITHUB_TOKEN"
-
+        
       - 
         name: Build and push image
         uses: docker/build-push-action@v5
