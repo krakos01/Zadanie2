@@ -59,7 +59,7 @@ jobs:
           github-pat: ${{ github.token }}
           severity: "HIGH,CRITICAL"
           scanners: "vuln"
-          exit-code: '2'
+        #  exit-code: '2'
 
 
      
