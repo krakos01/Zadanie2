@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ github.actor }}/zadanie2_test
+          images: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test
           flavor: latest=false
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
