@@ -47,6 +47,7 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "token: $GITHUB_TOKEN"
 
       - 
         name: Build and push image
