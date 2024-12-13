@@ -6,10 +6,6 @@ on:
     tags:
      - '*'
 
-env:
-  REGISTRY: ghcr.io
-
-
 jobs:
   ci_step:
     name: Build, tag and push image to registry
