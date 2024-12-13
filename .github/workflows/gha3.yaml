@@ -25,10 +25,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ vars.GITHUB_USERNAME }}/zadanie2_test
+          images: ${{ vars.GITHUB_USERNAME }}zadanie2_test
           flavor: latest=false
           tags: |
-            type=sha,priority=100,prefix=sha-,format=short
+            type=sha,priority=100,prefix=sha,format=short
             type=semver,priority=200,pattern={{version}}   
 
       - 
