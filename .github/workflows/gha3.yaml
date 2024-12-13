@@ -68,7 +68,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.29.0
         with:
           scan-type: 'image'
-          format: 'github'
+          format: 'table'
           output: 'dependency-results.sbom.json'
           image-ref: ${{ steps.meta.outputs.tags }}
           github-pat: ${{ github.token }}
