@@ -1,4 +1,4 @@
-name: z2test_gha
+name: Zadanie2
 
 on:
   workflow_dispatch:
@@ -16,12 +16,6 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
-      - 
-        name: Debug authentication
-        run: |
-          echo "Logging in to ghcr.io with ${{ github.actor }}"
-          echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-    
       - 
         name: Check out the source_repo
         uses: actions/checkout@v4
@@ -54,39 +48,39 @@ jobs:
           password: ${{ github.token }}
 
 
-      -
-        name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#      -
+#        name: Login to Docker Hub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ vars.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       -
         name: Docker Scout
         uses: docker/scout-action@v1.16.0
         with:
-          github-token: ${{ github.token }}
-          image: ${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test
+#          github-token: ${{ github.token }}
           command: cves
-       #   exit-on: "critical"
+          only-severities: high, critical
+          exit-code: true
           
 
 
-      - 
-        name: Build and push image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: true
-          cache-from: |
-            type=registry,ref=${{ vars.DOCKER_USERNAME }}/zadanie2_test:cache 
-          cache-to: |
-            type=registry,ref=${{ vars.DOCKER_USERNAME }}/zadanie2_test:cache  
-          tags: ${{ steps.meta.outputs.tags }}
+#      - 
+#        name: Build and push image
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          platforms: linux/amd64,linux/arm64
+#          push: true
+#          cache-from: |
+#            type=registry,ref=${{ vars.DOCKER_USERNAME }}/zadanie2_test:cache 
+#          cache-to: |
+#            type=registry,ref=${{ vars.DOCKER_USERNAME }}/zadanie2_test:cache  
+#          tags: ${{ steps.meta.outputs.tags }}
         
       - 
-        name: Build and push image
+        name: Build and push image to ghcr.io
         uses: docker/build-push-action@v5
         with:
           context: .
