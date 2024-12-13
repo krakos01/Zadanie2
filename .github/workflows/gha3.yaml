@@ -68,7 +68,7 @@ jobs:
         name: Build img
         id: build
         run: |
-          docker build -t docker.io/krakos01/zadanie2_test:v1 .
+          docker build -t ghcr.io/krakos01/zadanie2_test:v2 .
           
 
       -
@@ -79,7 +79,7 @@ jobs:
           format: 'table'
           output: 'dependency-results.sbom.json'
           #image-ref: ${{ steps.meta.outputs.tags }}
-          image-ref: 'docker.io/krakos01/zadanie2_test:v1'
+          image-ref: 'ghcr.io/krakos01/zadanie2_test:v2'
 #          github-pat: ${{ github.token }}
           severity: "HIGH,CRITICAL"
           scanners: "vuln"
