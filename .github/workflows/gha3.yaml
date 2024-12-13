@@ -71,7 +71,7 @@ jobs:
           docker build -t docker.io/krakos01/zadanie2_test:v1 .
           
 
-#      -
+      -
         name: Trivy SBOM
         uses: aquasecurity/trivy-action@0.29.0
         with:
