@@ -48,8 +48,8 @@ jobs:
         name: Docker Scout
         uses: docker/scout-action@v1.16.0
         with:
-            command: cves
-            exit-on: high
+          command: cves
+          exit-on: high
           
 
 
