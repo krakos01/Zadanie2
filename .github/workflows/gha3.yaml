@@ -49,23 +49,29 @@ jobs:
           password: ${{ github.token }}
 
 
-      -
-        name: Build image
-        id: build
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          platforms: linux/amd64,linux/arm64
-          push: false
-          cache-from: |
-            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
-          cache-to: |
-            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
+#      -
+#        name: Build image
+#        id: build
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          platforms: linux/amd64,linux/arm64
+#          push: false
+#          cache-from: |
+#            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
+#          cache-to: |
+#            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
           #tags: ${{ steps.meta.outputs.tags }}
-          tags: ghcr.io/krakos01/zadanie2_test:v0
-          
+#          tags: ghcr.io/krakos01/zadanie2_test:v0
 
       -
+        name: Build img
+        id: build
+        run: |
+          docker build -t docker.io/krakos01/zadanie2_test:v1 .
+          
+
+#      -
         name: Trivy SBOM
         uses: aquasecurity/trivy-action@0.29.0
         with:
@@ -73,8 +79,8 @@ jobs:
           format: 'table'
           output: 'dependency-results.sbom.json'
           #image-ref: ${{ steps.meta.outputs.tags }}
-          image-ref: 'ghcr.io/krakos01/zadanie2_test:v0'
-          github-pat: ${{ github.token }}
+          image-ref: 'docker.io/krakos01/zadanie2_test:v1'
+#          github-pat: ${{ github.token }}
           severity: "HIGH,CRITICAL"
           scanners: "vuln"
           exit-code: '2'
