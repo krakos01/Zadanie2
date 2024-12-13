@@ -82,7 +82,7 @@ jobs:
           #image-ref: ${{ steps.meta.outputs.tags }}
           image-ref: 'ghcr.io/krakos01/zadanie2_test:v2'
 #          github-pat: ${{ github.token }}
-          severity: "HIGH,CRITICAL, MEDIUM"
+          severity: "HIGH,CRITICAL,MEDIUM"
           scanners: "vuln"
           exit-code: '2'
 
