@@ -30,7 +30,6 @@ jobs:
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
             type=semver,priority=200,pattern={{version}}
-          load: true
 
       - 
         name: QEMU set-up
@@ -64,6 +63,8 @@ jobs:
           #tags: ${{ steps.meta.outputs.tags }}
 #          tags: ghcr.io/krakos01/zadanie2_test:v0
 
+
+# TO DZIALA 
       -
         name: Build img
         id: build
@@ -85,10 +86,10 @@ jobs:
           scanners: "vuln"
           exit-code: '2'
 
-      -
-        name: Push image to ghcr.io
-        run: |
-          docker push ${{ steps.meta.outputs.tags }}
+#      -
+#        name: Push image to ghcr.io
+#        run: |
+#          docker push ${{ steps.meta.outputs.tags }}
      
       -
         name: Upload as a Github artifact
