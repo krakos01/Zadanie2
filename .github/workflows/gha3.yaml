@@ -65,9 +65,25 @@ jobs:
         name: Docker Scout
         uses: docker/scout-action@v1.15.1
         with:
+          github-token: ${{ github.token }}
           image: ${{ env.REGISTRY }}/${{ github.repository_owner }}/zadanie2_test
           command: cves
           exit-on: critical, high
+          
+
+
+#      - 
+#        name: Build and push image
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: .
+#          platforms: linux/amd64,linux/arm64
+#          push: true
+#          cache-from: |
+#            type=registry,ref=${{ vars.DOCKER_USERNAME }}/zadanie2_test:cache 
+#          cache-to: |
+#            type=registry,ref=${{ vars.DOCKER_USERNAME }}/zadanie2_test:cache  
+#          tags: ${{ steps.meta.outputs.tags }}
         
       - 
         name: Build and push image
