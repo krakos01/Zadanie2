@@ -54,14 +54,27 @@ jobs:
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          
+
+
+#      - 
+#       name: Build and push image
+#       uses: docker/build-push-action@v5
+#       with:
+#         context: .
+#         platforms: linux/amd64,linux/arm64
+#         push: true
+#         cache-from: |
+#          type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test:cache 
+#        cache-to: |
+#         type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zadanie2_test:cache  
+#       tags: ${{ steps.meta.outputs.tags }}
 
       -
         name: Docker Scout
         uses: docker/scout-action@v1.16.0
         with:
-          image: ${{ env.REGISTRY }}/${{ github.repository_owner }}/zadanie2_test
-          github-token: ${{ github.token }}
+#          image: ${{ env.REGISTRY }}/${{ github.repository_owner }}/zadanie2_test
+#          github-token: ${{ github.token }}
           command: cves
           only-severities: high, critical
           exit-code: true
