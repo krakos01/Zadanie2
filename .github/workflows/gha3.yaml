@@ -57,9 +57,9 @@ jobs:
           output: 'dependency-results.sbom.json'
           image-ref: '.'
           github-pat: ${{ github.token }}
-          severity: "HIGH, CRITICAL"
+          severity: 'HIGH, CRITICAL'
           scanners: 'vuln'
-          exit-code: '1'
+          exit-code: '2'
      
 
         
