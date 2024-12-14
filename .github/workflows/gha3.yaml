@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test
+          images: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test
           flavor: latest=false
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
@@ -48,69 +48,33 @@ jobs:
           password: ${{ github.token }}
 
 
-#      -
-#        name: Build image
-#        id: build
-#        uses: docker/build-push-action@v5
-#        with:
-#          context: .
-#          platforms: linux/amd64,linux/arm64
-#          push: false
-#          cache-from: |
-#            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
-#          cache-to: |
-#            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache
-          #tags: ${{ steps.meta.outputs.tags }}
-#          tags: ghcr.io/krakos01/zadanie2_test:v0
-
-
-# TO DZIALA 
       -
-        name: Build img
+        name: Build image
         id: build
-        run: |
-          docker build -t ghcr.io/krakos01/zadanie2_test:v2 .
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+#          load: true
+          outputs: type=docker
+          tags: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:latest
+          cache-from: |
+            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache
+          cache-to: |
+            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache
           
-
       -
-        name: Trivy SBOM
+        name: Scan using Trivy SBOM
         uses: aquasecurity/trivy-action@0.29.0
         with:
           scan-type: 'image'
-          format: 'table'
-          output: 'dependency-results.sbom.json'
-          #image-ref: ${{ steps.meta.outputs.tags }}
-          image-ref: 'ghcr.io/krakos01/zadanie2_test:v2'
-#          github-pat: ${{ github.token }}
-          severity: "HIGH,CRITICAL,MEDIUM"
-          scanners: "vuln"
-          exit-code: '2'
-
-#      -
-#        name: Push image to ghcr.io
-#        run: |
-#          docker push ${{ steps.meta.outputs.tags }}
-     
-      -
-        name: Upload as a Github artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: trivy-sbom-report
-          path: 'dependency-results.sbom.json'
-
+          format: 'cyclonedx'
+          output: 'sbom.cdx.json'
+          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:latest
+          severity: HIGH,CRITICAL
+          exit-code: 2
         
-#      - 
-#        name: Build and push image to ghcr.io
-#        uses: docker/build-push-action@v5
-#        with:
-#          context: .
-#          platforms: linux/amd64,linux/arm64
-#          push: true
-#          cache-from: |
-#            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache 
-#          cache-to: |
-#            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2_test:cache  
-#          tags: ${{ steps.meta.outputs.tags }}
-
-    
-                 
+      - 
+        name: Push image to ghcr.io
+        run: |
+          docker push ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:latest
