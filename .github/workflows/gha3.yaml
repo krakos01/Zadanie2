@@ -57,10 +57,10 @@ jobs:
           platforms: linux/amd64,linux/arm64
           outputs: type=registry
           cache-from: |
-            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache
+            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:cache
           cache-to: |
-            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache
-          tags: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test
+            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:cache
+          tags: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod
 
           
       -
