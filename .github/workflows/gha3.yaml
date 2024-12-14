@@ -49,7 +49,36 @@ jobs:
 
 
       -
-        name: Build image and push
+        name: Build local image for trivy
+        id: build_trivy
+        run: |
+          docker build -t local/krakos01/zadanie2dod:trivy
+
+     
+      -
+        name: Generate SBOM using Trivy and submit results
+        uses: aquasecurity/trivy-action@0.29.0
+        with:
+          image-ref: 'local/krakos01/zadanie2dod:trivy'
+          format: 'github'
+          output: 'dependency-results.sbom.json'
+          github-pat: ${{ github.token }}
+         
+
+      -
+        name: Scan image vulnerabilities using Trivy
+        uses: aquasecurity/trivy-action@0.29.0
+        with:
+          image-ref: 'local/krakos01/zadanie2dod:trivy'
+          format: 'table'
+          severity: 'HIGH,CRITICAL'
+          vuln-type: 'os,library'
+          exit-code: '2'
+
+        
+
+      -
+        name: Build multiplatform images and push
         id: build
         uses: docker/build-push-action@v5
         with:
@@ -61,29 +90,3 @@ jobs:
           cache-to: |
             type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:cache
           tags: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod
-
-          
-      -
-        name: Generate SBOM using Trivy
-        uses: aquasecurity/trivy-action@0.29.0
-        with:
-          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:latest
-          format: 'cyclonedx'
-          output: 'sbom.cdx.json'
-         
-
-      -
-        name: Scan image vulnerabilities using Trivy
-        uses: aquasecurity/trivy-action@0.29.0
-        with:
-          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:latest
-          severity: HIGH,CRITICAL
-          scanners: vuln
-          exit-code: 2
-        
-        
-      - 
-        name: Push image to ghcr.io
-        if: success()
-        run: |
-          docker push ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:latest
