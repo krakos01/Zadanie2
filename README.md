@@ -107,7 +107,7 @@ Wynik skanowania:
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
 ```
 
-- Jeśli skanowanie zagrożeń przejdzie pomyślnie, to następuje prawidłowe budowanie wieloarchitekturowego obrazu i wysłanie na rejestr ghcr.io, z użyciem <i>docker/build-push-action@v5</i>, tak samo jak w części obowiązkowej.
+- Jeśli skanowanie zagrożeń przejdzie pomyślnie, to następuje prawidłowe budowanie wieloarchitekturowego obrazu i wysłanie na rejestr ghcr.io, z użyciem <i>docker/build-push-action@v5</i>. W porównaniu do części obowiązkowej, został dodany input: ``` provenance: mode=max ```
 
 Uruchomienie obrazu przechodzi pomyślnie, a w zakładce 'packages' pojawia się mój obraz.
 ![Screen3](https://github.com/user-attachments/assets/a2ca61b5-d608-46fe-b0ab-b13a6bceb360)
