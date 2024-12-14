@@ -1,5 +1,5 @@
 # -- ETAP 1 --
-FROM golang:1.23-alpine3.19 AS builder
+FROM golang:1.23.4-alpine3.20 AS builder
 
 # Ustawienie katalogu roboczego
 WORKDIR /app
@@ -19,7 +19,7 @@ FROM scratch
 LABEL org.opencontainers.image.authors="Dawid Krajewski"
 
 # Wykorzystuje obraz bazowy alpine
-ADD alpine-minirootfs-3.20.3-x86_64.tar /
+ADD alpine-minirootfs-3.21.0-x86_64.tar /
 
 # Instalacja CURL'a
 RUN apk add --update --no-cache curl
