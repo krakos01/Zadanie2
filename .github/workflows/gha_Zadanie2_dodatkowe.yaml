@@ -79,13 +79,15 @@ jobs:
         
 
       -
-        name: Build multiplatform images and push
+        name: Build multiplatform images with provenanceand push
         id: build
         uses: docker/build-push-action@v5
         with:
           context: .
           platforms: linux/amd64,linux/arm64
+          push: true
           outputs: type=registry
+          provenance: mode=max
           cache-from: |
             type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:cache
           cache-to: |
