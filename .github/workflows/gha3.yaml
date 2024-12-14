@@ -72,7 +72,7 @@ jobs:
             --provenance=mode=max \
             --cache-from=type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache \
             --cache-to=type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache \
-            --tag ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test
+            --tag ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test \
             --output=type=docker \
             .
           
