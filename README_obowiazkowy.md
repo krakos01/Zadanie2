@@ -2,7 +2,7 @@ Dawid Krajewski 97646
 
 # Sprawozdanie - część obowiązkowa
 
-### 1. Opis workflow
+### Opis workflow
 [Cały plik workflow dla części obowiązkowej](.github/workflows/gha_Zadanie2.yaml)
 
 - Dodano zmienną REGISTRY: <br>
