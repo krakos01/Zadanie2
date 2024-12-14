@@ -74,6 +74,7 @@ jobs:
           severity: 'HIGH,CRITICAL'
           vuln-type: 'os,library'
           exit-code: '2'
+          github-pat: ${{ github.token }}
 
         
 
