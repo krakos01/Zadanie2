@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test
+          images: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod
           flavor: latest=false
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
@@ -64,15 +64,15 @@ jobs:
  #         tags: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test
 
       -
-        name: Build image
+        name: Build multi-arch image (local only)
+        id: build
         run: |
           docker buildx create --use
           docker buildx build \
             --platform linux/amd64,linux/arm64 \
-            --provenance=mode=max \
-            --cache-from=type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache \
-            --cache-to=type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache \
-            --tag ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test \
+            --cache-from=type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:cache \
+            --cache-to=type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:cache \
+            --tag ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod}:latest \
             --output=type=docker \
             .
           
@@ -80,7 +80,7 @@ jobs:
         name: Generate SBOM using Trivy
         uses: aquasecurity/trivy-action@0.29.0
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:latest
+          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:latest
           format: 'cyclonedx'
           output: 'sbom.cdx.json'
          
@@ -89,7 +89,7 @@ jobs:
         name: Scan image vulnerabilities using Trivy
         uses: aquasecurity/trivy-action@0.29.0
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:latest
+          image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:latest
           severity: HIGH,CRITICAL
           scanners: vuln, os
           exit-code: 2
