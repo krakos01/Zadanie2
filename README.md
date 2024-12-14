@@ -46,7 +46,7 @@ run: |
   docker build -t local/krakos01/zadanie2dod:trivy .
 ```
 
-- Następnie jest generowany SBOM (i dodawany do dependency graph) poprzez użycie <i>aquasecurity/trivy-action@0.29.0</i>. Jako obraz zostaje przekazany ten utwrzony w poprzednim kroku. 
+- Następnie jest generowany SBOM poprzez użycie <i>aquasecurity/trivy-action@0.29.0</i>. Github-pat jest dodany, żeby można było przekazać wyniki do dependency graph. Jako obraz zostaje przekazany ten utwrzony w poprzednim kroku. W porównaniu do Docker Scouta, Trivy nie znajduje zagrożeń.
 ```
 name: Generate SBOM using Trivy and submit results
 uses: aquasecurity/trivy-action@0.29.0
@@ -84,7 +84,7 @@ Running Trivy with options: trivy image local/krakos01/zadanie2dod:trivy
 }
 ```
 
-- Skanowanie zagrożeń przez Trivy. Jeśli znajdzie błędy o poziomie HIGH lub CRITICAL workflow zostanie zakończony. W porównaniu do Docker Scouta, Trivy nie znajduje zagrożeń (tak samo w SBOM).<br> 
+- Skanowanie zagrożeń przez Trivy. Jeśli znajdzie błędy o poziomie HIGH lub CRITICAL typu os lub library workflow zostanie zakończony. Wynik zostaje pokazany w formacie tabeli. <br> 
 ```
 name: Scan image vulnerabilities using Trivy
 uses: aquasecurity/trivy-action@0.29.0
