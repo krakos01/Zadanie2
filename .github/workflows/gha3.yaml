@@ -48,33 +48,20 @@ jobs:
           password: ${{ github.token }}
 
 
-#      -
-#        name: Build image
-#        id: build
-#        uses: docker/build-push-action@v5
-#        with:
-#          context: .
-#          platforms: linux/amd64,linux/arm64
-##          outputs: type=registry
- #         load: true
- ##         cache-from: |
-  #          type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache
- #         cache-to: |
- #           type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache
- #         tags: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test
-
       -
-        name: Build multi-arch image (local only)
+        name: Build image and push
         id: build
-        run: |
-          docker buildx create --use
-          docker buildx build \
-            --platform linux/amd64,linux/arm64 \
-            --cache-from=type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:cache \
-            --cache-to=type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:cache \
-            --tag ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:latest \
-            --output=type=docker \
-            .
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          outputs: type=registry
+          cache-from: |
+            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache
+          cache-to: |
+            type=registry,ref=${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test:cache
+          tags: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod_test
+
           
       -
         name: Generate SBOM using Trivy
