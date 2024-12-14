@@ -78,7 +78,7 @@ jobs:
         with:
           image-ref: ${{ env.REGISTRY }}/${{ github.actor }}/zadanie2dod:latest
           severity: HIGH,CRITICAL
-          scanners: vuln, os
+          scanners: vuln
           exit-code: 2
         
         
