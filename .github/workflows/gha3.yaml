@@ -52,7 +52,7 @@ jobs:
         name: Build local image for trivy
         id: build_trivy
         run: |
-          docker build -t local/krakos01/zadanie2dod:trivy
+          docker build -t local/krakos01/zadanie2dod:trivy .
 
      
       -
